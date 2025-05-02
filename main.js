@@ -10,9 +10,7 @@ $(document).ready(function() {
     const createClouds = () => {
         console.log('createClouds');
         const numPixels = Math.floor(Math.random() * 15);
-        const numClouds = Math.floor(Math.random() * 11);
-
-
+        const numClouds = Math.ceil(Math.random() * 11);
         
         for (let i = 0; i <= numClouds; i++) {
             let random = Math.random();
@@ -25,7 +23,8 @@ $(document).ready(function() {
             } else {
                 pixel_size = 10;
             }   
-            console.log('creating cloud with pixel size:', pixel_size)
+            
+            console.log('creating:', numClouds, 'clouds with:', numPixels, 'pixels')
             createSingleCloud(numPixels, pixel_size);
         }
     }
@@ -57,6 +56,24 @@ $(document).ready(function() {
 
             cloud_pixel.css('width', cloud_width + 1);
             cloud_pixel.css('height', cloud_height + 1);
+
+            let random = Math.random() * 10;
+            if (random <= 1) {
+                cloud_pixel.css('background-color', "rgb(245,245,245)")
+            } else if (random > 1 && random <= 9) {
+                cloud_pixel.css('background-color', "rgb(255,255,255)")
+            } else {
+                cloud_pixel.css('background-color', "rgb(250,250,250)")
+            }
+
+            random = Math.random() * 10;
+            if (random <= 3) {
+                cloud_pixel.css('opacity', "85%")
+            } else if (random > 9) {
+                cloud_pixel.css('opacity', "70%")
+            } else {
+                cloud_pixel.css('opacity', "100%")
+            }
         }
         
         $('#skyContainer').append(cloudContainer)
