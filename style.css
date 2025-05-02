@@ -1,0 +1,27 @@
+#mainContainer {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+}
+
+#skyContainer {
+    width: 100vw;
+    height: 40vh;
+    background-color: rgb(167, 209, 237);
+    position: relative;
+}
+
+.cloudContainer {
+    position: absolute;
+}
+
+#groundContainer {
+    width: 100vw;
+    height: 60vh;
+    background-color: maroon;
+}
+
+.cloudPixel {
+    background-color: white;
+    position: absolute;
+}
