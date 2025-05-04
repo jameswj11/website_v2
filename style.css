@@ -18,10 +18,16 @@
 #groundContainer {
     width: 100vw;
     height: 60vh;
-    background-color: maroon;
+    background-color: rgb(225, 210, 157);
+    position: absolute;
 }
 
 .cloudPixel {
-    background-color: white;
+    background-color: rgb(213, 213, 213);
+    position: absolute;
+}
+
+.mountainPixel {
+    background-color:  rgb(81, 51, 5);
     position: absolute;
 }

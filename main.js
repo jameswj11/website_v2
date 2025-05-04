@@ -1,31 +1,44 @@
 $(document).ready(function() {
     console.log('document ready')
+
+    const randomNum = (min = 0, max = 10) => {
+        return Math.ceil(Math.random() * ((max - min + 1) + 1)) + min;
+    };
+
+    const skyHeight = randomNum(30, 45);
+    const groundHeight = 100-skyHeight;
+
+    $('#groundContainer').css('height', groundHeight + 'vh')
+
     const createSky = () => {
-        console.log('createSky');
-    
-        createClouds();
+        console.log('createSky with width:', window.innerWidth, 'height', window.innerHeight);
+        const pixelSeed = 15;
+        const cloudSeed = Math.floor(window.innerWidth / 250);
+
+        $('#skyContainer').css('height', skyHeight + 'vh')
+        createClouds(cloudSeed, pixelSeed);
         createMoon();
     }
 
-    const createClouds = () => {
+    const createClouds = (cloudSeed, pixelSeed) => {
         console.log('createClouds');
-        const numPixels = Math.floor(Math.random() * 15);
-        const numClouds = Math.ceil(Math.random() * 11);
+        const pixelCount = (randomNum() * pixelSeed) / 10;
+        const cloudCount = (randomNum() * cloudSeed) / 10;
         
-        for (let i = 0; i <= numClouds; i++) {
-            let random = Math.random();
+        for (let i = 0; i <= cloudCount; i++) {
+            let random = randomNum(0, 100);
             let pixel_size;
             
-            if (random >= 0.28 && random <= 0.85) {
+            if (random >= 28 && random <= 85) {
                 pixel_size = 40;
-            } else if (random < 0.28){
+            } else if (random < 28){
                 pixel_size = 20;
             } else {
                 pixel_size = 10;
             }   
             
-            console.log('creating:', numClouds, 'clouds with:', numPixels, 'pixels')
-            createSingleCloud(numPixels, pixel_size);
+            console.log('creating:', cloudCount, 'clouds with:', pixelCount, 'pixels')
+            createSingleCloud(pixelCount, pixel_size);
         }
     }
     
@@ -39,12 +52,13 @@ $(document).ready(function() {
         cloudContainer.css('bottom', '0');
 
         for (let i = 0; i <= numPixels; i++) {
-            console.log('adding pixel')
-            const cluster_x = pixel_size * (Math.floor(Math.random(0, 4) * (5)));
-            const cluster_y = pixel_size * (Math.floor(Math.random(0, 4) * (5)));
+            const cluster_x = pixel_size * randomNum(0, 5);
+            const cluster_y = pixel_size * randomNum(0, 5);
 
-            const cloud_width = pixel_size * Math.ceil(Math.random() * 5);
-            const cloud_height = pixel_size * Math.ceil(Math.random() * 3);
+            console.log(cluster_x, cluster_y, 'pixel size:', pixel_size)
+
+            const cloud_width = pixel_size * randomNum(0, 5);
+            const cloud_height = pixel_size * randomNum(0, 3);
 
             const cloud_pixel = $("<div>");
             cloud_pixel.addClass('cloudPixel');
@@ -57,7 +71,7 @@ $(document).ready(function() {
             cloud_pixel.css('width', cloud_width + 1);
             cloud_pixel.css('height', cloud_height + 1);
 
-            let random = Math.random() * 10;
+            let random = randomNum(1, 10);
             if (random <= 1) {
                 cloud_pixel.css('background-color', "rgb(245,245,245)")
             } else if (random > 1 && random <= 9) {
@@ -66,7 +80,7 @@ $(document).ready(function() {
                 cloud_pixel.css('background-color', "rgb(250,250,250)")
             }
 
-            random = Math.random() * 10;
+            random = randomNum(1, 10);
             if (random <= 3) {
                 cloud_pixel.css('opacity', "85%")
             } else if (random > 9) {
@@ -77,9 +91,39 @@ $(document).ready(function() {
         }
         
         $('#skyContainer').append(cloudContainer)
-        cloudContainer.css('left', 50 * Math.ceil(Math.random() * (window.innerWidth/50)))
+
+        let testNum = randomNum(0,10) * (window.innerWidth/7);
+        cloudContainer.css('left', randomNum(0, (window.innerWidth)) - 150)
         cloudContainer.css('bottom', 50 * Math.floor(Math.random() * 3))
+    }
+
+    const createGround = () => {
+        createBuildings();
+        let mountainContainer = $('<div>');
+        let mountainPixel_size = 20;
+        let numPixels = 10;
+        let numRows = 3
+        
+        for (let i = 0; i < numPixels; i++) {
+            let mountainPixel = $('<div>');
+            mountainPixel.addClass('mountainPixel')
+            mountainPixel.css('width', mountainPixel_size)
+            mountainPixel.css('height', mountainPixel_size)
+
+            if (i == 0) {
+                mountainPixel.css('left', '0');
+                mountainPixel.css('top', '0');
+            } else {
+                mountainPixel.css('left', i * mountainPixel_size)
+                mountainPixel.css('top', i * mountainPixel_size)
+            }
+            mountainContainer.append(mountainPixel)
+        }
+
+
+        $('#groundContainer').append(mountainContainer)
     }
      
     createSky();
+    createGround();
 })
